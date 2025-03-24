@@ -22,8 +22,7 @@ document.getElementById("quad-form").addEventListener('submit', (event) => {
 );
 
 return (
-    body>
-    <div class="box1">
+    <div className="box1">
         <h1>Quadratic Formula</h1>
         <form id="quad-form">
             <label for="a">a value:</label>

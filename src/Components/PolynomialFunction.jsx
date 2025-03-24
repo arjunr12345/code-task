@@ -31,7 +31,7 @@ document.getElementById("poly").addEventListener("submit", (event) => {
 });
 
 return (
-    <div class="box4">
+    <div className="box4">
         <h1>Polynomial</h1>
         <form id="poly">
             <label for="ce">Coefficients:</label>
