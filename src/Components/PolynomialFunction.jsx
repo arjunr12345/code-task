@@ -1,52 +1,106 @@
 import { useState } from 'react';
-import './PolynomialFunction.css'
+import './PolynomialFunction.css';
 
-document.getElementById("poly").addEventListener("submit", (event) => {
+function PolynomialFunction() {
+  const [coefficients, setCoefficients] = useState([]);
+  const [exponents, setExponents] = useState([]);
+  const [xValue, setXValue] = useState(0);
+  const [polynomialString, setPolynomialString] = useState('');
+  const [polynomialValue, setPolynomialValue] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  function handleSubmit(event) {
     event.preventDefault();
+    
+    // Parse input values
+    const coefArray = coefficients.split(' ').map(Number);
+    const expArray = exponents.split(' ').map(Number);
+    const x = parseFloat(xValue);
 
-    const coefficients = document.getElementById("ce").value.split(" ").map(Number);
-    const exponents = document.getElementById("ex").value.split(" ").map(Number);
-    const x = parseFloat(document.getElementById("x").value);
-
-    if (coefficients.length !== exponents.length) {
-        document.getElementById("result4").value = "Error: Mismatched coefficients and exponents";
-        return;
+    // Check for matching lengths
+    if (coefArray.length !== expArray.length) {
+      setErrorMessage('Error: Mismatched coefficients and exponents');
+      setPolynomialString('');
+      setPolynomialValue(null);
+      return;
     }
 
-    let polynomialString = "";
-    let polynomialValue = 0;
+    let polynomialStr = '';
+    let polynomialVal = 0;
 
-    for (let i = 0; i < coefficients.length; i++) {
-        let coef = coefficients[i];
-        let exp = exponents[i];
+    for (let i = 0; i < coefArray.length; i++) {
+      let coef = coefArray[i];
+      let exp = expArray[i];
 
-        if (i > 0 && coef >= 0) polynomialString += " + ";
-        polynomialString += `${coef}x^${exp}`;
-
-        polynomialValue += coef * Math.pow(x, exp);
+      if (i > 0 && coef >= 0) polynomialStr += ' + ';
+      polynomialStr += `${coef}x^${exp}`;
+      
+      polynomialVal += coef * Math.pow(x, exp);
     }
 
-    document.getElementById("result4").value = polynomialString;
-    document.getElementById("result5").value = polynomialValue.toFixed(4); // Rounded to 4 decimal places
-});
+    setPolynomialString(polynomialStr);
+    setPolynomialValue(polynomialVal.toFixed(4));
+    setErrorMessage('');
+  }
 
-return (
+  return (
     <div className="box4">
-        <h1>Polynomial</h1>
-        <form id="poly">
-            <label for="ce">Coefficients:</label>
-            <input type="number" id="ce" name="ce" required />
-            <label for="ex">Exponents:</label>
-            <input type="number" id="ex" name="ex" required />
-            <label for="x">x value:</label>
-            <input type="number" id="x" name="x" required />
-            <label for="result4">Polynomial Function result:</label>
-            <input type="text" id="result4" name="result4" />
-            <label for="result5">Polynomial Evaluation result:</label>
-            <input type="text" id="result5" name="result5" />
-            <input type="submit" value="Calculate" />
-        </form>
+      <h1>Polynomial</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="ce">Coefficients:</label>
+        <input
+          type="text"
+          id="ce"
+          name="ce"
+          value={coefficients}
+          onChange={(e) => setCoefficients(e.target.value)}
+          required
+        />
+
+        <label htmlFor="ex">Exponents:</label>
+        <input
+          type="text"
+          id="ex"
+          name="ex"
+          value={exponents}
+          onChange={(e) => setExponents(e.target.value)}
+          required
+        />
+
+        <label htmlFor="x">x value:</label>
+        <input
+          type="number"
+          id="x"
+          name="x"
+          value={xValue}
+          onChange={(e) => setXValue(e.target.value)}
+          required
+        />
+
+        {errorMessage && <p className="error">{errorMessage}</p>}
+
+        <label htmlFor="result4">Polynomial Function result:</label>
+        <input
+          type="text"
+          id="result4"
+          name="result4"
+          value={polynomialString}
+          readOnly
+        />
+
+        <label htmlFor="result5">Polynomial Evaluation result:</label>
+        <input
+          type="text"
+          id="result5"
+          name="result5"
+          value={polynomialValue || ''}
+          readOnly
+        />
+
+        <input type="submit" value="Calculate" />
+      </form>
     </div>
-)
+  );
+}
 
 export default PolynomialFunction;
