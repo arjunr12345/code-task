@@ -1,83 +1,53 @@
 import { useState } from 'react';
 import './AmbiguousCase.css';
 
-function AmbiguousCase() {
-  const [angleA, setAngleA] = useState('');
-  const [sideB, setSideB] = useState('');
-  const [sideC, setSideC] = useState('');
-  const [result, setResult] = useState('');
+function ambiguous() {
+    const a = document.getElementById("Aa").value;
+    const b = document.getElementById("b").value;
+    const c = document.getElementById("c").value;
+    const am = c * Math.sin(a * Math.PI / 180);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    
-    const a = parseFloat(angleA);
-    const b = parseFloat(sideB);
-    const c = parseFloat(sideC);
-    
-    const am = c * Math.sin(a * Math.PI / 180); // Convert angle from degrees to radians
-
+    function ambiguouscase(event) {
     if (a <= 90) {
-      if (b < am) {
-        setResult("No triangle");
-      } else if (b === am) {
-        setResult("Right triangle");
-      } else if (b > am) {
-        setResult("One triangle");
-      } else if (am < b && b < c) {
-        setResult("Two triangles (ambiguous case)");
-      }
+        if (b < am) {
+            document.getElementById("result-2").value = "No triangle";
+        } else if (b == am) {
+            document.getElementById("result-2").value = "Right triangle";
+        } else if (b > am) {
+            document.getElementById("result-2").value = "one triangle";
+        } else if (am < b && b < c) {
+            document.getElementById("result-2").value = "Two triangles (ambiguous case)";
+        }
     } else {
-      if (b < c || b === c) {
-        setResult("No triangle");
-      } else if (b > c) {
-        setResult("One triangle");
-      }
+        if (b < c || b == c) {
+            document.getElementById("result-2").value = "No Triangle";
+        }
+        else if (b > c) {
+            document.getElementById("result-2").value = "one triangle";
+        }
     }
+    //document.getElementById("result-2").value = "error";
+
   }
+}
+
 
   return (
-    <div className="box2">
-      <h1>Ambiguous case</h1>
-      <form id="ambiguous" onSubmit={handleSubmit}>
-        <label htmlFor="Aa">Angle A:</label>
-        <input
-          type="number"
-          id="Aa"
-          name="Aa"
-          value={angleA}
-          onChange={(e) => setAngleA(e.target.value)}
-          required
-        />
-        <label htmlFor="sa">Side A:</label>
-        <input
-          type="number"
-          id="b"
-          name="b"
-          value={sideB}
-          onChange={(e) => setSideB(e.target.value)}
-          required
-        />
-        <label htmlFor="sb">Side B:</label>
-        <input
-          type="number"
-          id="c"
-          name="c"
-          value={sideC}
-          onChange={(e) => setSideC(e.target.value)}
-          required
-        />
-        <label htmlFor="result">Result:</label>
-        <input
-          type="text"
-          id="result-2"
-          name="result"
-          value={result}
-          readOnly
-        />
+    <div class="box2">
+    <h1>Ambiguous case</h1>
+    <form id="ambiguous">
+        <label for="Aa">Angle A:</label>
+        <input type="number" id="Aa" name="Aa" required />
+        <label for="sa">Side A:</label>
+        <input type="number" id="b" name="b" required />
+        <label for="sb">Side B:</label>
+        <input type="number" id="c" name="c" required />
+        <label for="result">Result:</label>
+        <input type="text" id="result-2" name="result" />
         <input type="submit" value="Calculate" />
-      </form>
-    </div>
+    </form>
+</div>
   );
-}
+
 
 export default AmbiguousCase;

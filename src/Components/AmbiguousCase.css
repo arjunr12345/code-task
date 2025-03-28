@@ -1,6 +1,6 @@
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -14,15 +14,7 @@ body {
     margin: 0;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columns layout */
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-}
-
-.box2{
+.box2 {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -40,20 +32,25 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 label {
     margin-bottom: 8px;
     font-size: 14px;
     color: #555;
+    align-self: flex-start;
 }
 
-input[type="number"], input[type="text"] {
+input[type="number"],
+input[type="text"] {
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    width: 100%; /* Ensures input fields fill the available width */
+    max-width: 250px; /* Optional: limits input fields width */
 }
 
 input[type="submit"] {
@@ -64,8 +61,15 @@ input[type="submit"] {
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    width: 100%; /* Ensures button fills the available width */
+    max-width: 250px; /* Optional: limits button width */
 }
 
 input[type="submit"]:hover {
     background-color: #acacac;
+}
+
+input[readonly] {
+    background-color: #e0e0e0; /* Adds a distinct look for readonly input fields */
+    cursor: not-allowed;
 }
